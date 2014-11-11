@@ -1,0 +1,13 @@
+body {
+  font-family: "Freight Sans Light";
+  font-style: normal;
+  font-weight: normal;
+}
+
+nav {
+	opacity: .9;
+}
+
+.nav li {
+	color: #333333;
+}

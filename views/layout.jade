@@ -1,0 +1,50 @@
+doctype html
+html(lang='en')
+	head
+		meta(charset="utf-8")
+		title Travel Project
+		link(href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet")
+		link(href="/stylesheets/bootstrap.min.css" rel="stylesheet")
+		link(href="/stylesheets/main.css" rel="stylesheet")
+		//- link(href="http://cloud.webtype.com/css/ac61881b-b663-4181-818f-40f1f5ef6235.css" rel="stylesheet" type="text/css")
+	
+	block stylesheets
+
+	block content
+	body
+		nav.navbar.navbar-default(role='navigation')
+			.container-fluid
+				.navbar-header
+					button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
+						span.sr-only Toggle navigation
+						span.icon-bar
+						span.icon-bar
+						span.icon-bar
+					a.navbar-brand(href='#') Chronicles Abroad
+			
+				#bs-example-navbar-collapse-1.collapse.navbar-collapse
+					ul.nav.navbar-nav
+					ul.nav.navbar-nav.navbar-right
+						li.dropdown
+							a.dropdown-toggle(href='#', data-toggle='dropdown')
+								| Cities
+								span.caret
+							ul#myLibrary.dropdown-menu(role='menu')
+						li
+							a(href='/board') Reviews
+						li
+							a(href='#') Profile
+						li.dropdown
+							a.dropdown-toggle(href='#', data-toggle='dropdown')
+								//- | #{user.username}
+								span.caret
+							ul.dropdown-menu(role='menu')
+								li
+									a(href='/auth/logout') LogOut
+
+
+	script(src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js")
+	script(src="/js/bootstrap.min.js")
+	script(src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places")
+	block scripts
+		

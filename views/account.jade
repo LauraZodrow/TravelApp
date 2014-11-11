@@ -1,0 +1,59 @@
+extends layout
+
+block stylesheets
+	link(href="/stylesheets/map.css" rel="stylesheet")
+	link(rel="stylesheet" type="text/css" href="/stylesheets/account.css")
+
+
+block content
+	#map-canvas
+	//- #myLibrary My Library
+	input#pac-input.controls(type='text', placeholder='Search Box')
+	.col-md-12.timelineLine
+		h2.timelineTitle Cities Visted...
+		img(src="/images/timeline-line.png")
+		.placeMarkerImageWrapper
+	.row
+		.col-md-10.col-md-offset-2.timelineDetails
+
+
+	button.btn.btn-primary.btn-lg.modalButton(data-toggle='modal', data-target='#myModal')
+		|Add to Timeline
+	//- Modal 
+	#myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+		.modal-dialog
+			.modal-content
+				.modal-header
+					button.close(type='button', data-dismiss='modal')
+						span(aria-hidden='true') ×
+						span.sr-only Close
+				.modal-body
+					| Add to Timeline
+				.modal-footer
+					button.btn.btn-default(type='button', data-dismiss='modal') Close
+					button.btn.btn-primary.addButton(type='button') Add
+
+
+	.board-nav
+		ul.row
+			li.col-md-3.school-nav
+				i.fa.fa-pencil.fa-2x
+				.school-text School
+			li.col-md-2.food-nav
+				i.fa.fa-cutlery.fa-2x
+				.food-test Food
+			li.col-md-2.hostels-nav 
+				i.fa.fa-home.fa-2x
+				.hostels-text Hostels
+			li.col-md-2.museums-nav
+				i.fa.fa-university.fa-2x
+				.museums-text Museums
+			li.col-md-3.pubs-nav 
+				i.fa.fa-beer.fa-2x
+				.pubs-text Pubs
+
+
+	block scripts
+		script(src="/js/map.js")
+		script(src="/js/account-timeline.js")
+	

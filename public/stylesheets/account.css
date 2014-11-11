@@ -1,0 +1,115 @@
+html, body {
+	height: 100%;
+}
+
+img {
+	max-width: 100%;
+}
+
+.timelineTitle {
+	text-align: center;
+}
+
+.timelineLine {
+	margin-bottom: 5%;
+}
+.trending {
+	background-color: #66c5c5;
+	color: #fff;
+}
+
+.whosInCity {
+	background-color: #ee9000;
+	color: #fff;
+}
+
+/*Timeline CSS*/
+.modalButton {
+	display: none;
+}
+
+.locationContainer {
+	border-left: #000 2px solid;
+	display: inline-block;
+	padding: 8px;
+}
+
+.timelineLine {
+	position: relative;
+	margin-top: 40px;
+	margin-bottom: 40px;
+}
+
+.placeMarkerImageWrapper {
+	position:absolute;
+	top: 82px;
+	left: 80px;
+}
+
+.placeMarkerImage {
+	display: inline-block;
+	margin: 0px 15px;
+}
+
+.timelineLine h3 {
+	text-align: center;
+}
+
+.editable,
+.edit-input {
+	margin-bottom: 6%;
+	width: 80%;
+	min-height: 100px;
+	font-size: 14px;
+}
+
+#myLibrary {
+	top: 0px;
+	right: 10px;
+	position: absolute;
+	z-index: 3;
+	background: #999;
+}
+
+.submitBtn {
+	text-align: center;
+	border: #666 solid 2px;
+	width: 80%;
+	margin-bottom: 5%;
+	padding: 1%;
+	text-transform: uppercase;
+}
+
+.board-nav ul {
+	list-style: none;
+}
+
+.board-nav li {
+	display: inline-block;
+	text-align: center;
+}
+
+/*Location CSS*/
+
+#libraryContainer ul {
+	list-style-type: none;
+	text-decoration: none;
+}
+
+.city-name {
+	margin-top: 5%;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	width: 50%;
+	border-bottom: #e7e7e7 1px solid;
+}
+
+.timelineDetails {
+	border-left: #e7e7e7 2px solid;
+	padding-right: 1%;
+}
+
+
