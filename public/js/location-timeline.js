@@ -57,6 +57,8 @@ var submitClick = function() {
 
   var storeDescription = $(this).closest('.timelineDetails').find('.editable').val();
 
+  console.log($(this))
+
   var cityTimelineData = {
     name: storeName,
     description: storeDescription
@@ -95,7 +97,7 @@ Location.prototype.markerclick = function(e) {
         name: location.marker.title,
         description: $("<textarea class='editable' placeholder='What is your experience?'></textarea>"),
         edit: $("<i class='fa fa-pencil fa-lg edit'></i>"),
-        submit: $("<div class='submitBtn'>Submit</div>")
+        // submit: $("<div class='submitBtn'>Submit</div>")
       };
 
       renderTimeline(placeMarker);
@@ -126,13 +128,13 @@ $('.edit').on('click', function(){
 
 //show more of timeline
 $('.readMore').on('click', function(){
-  $('.timelineWrapper').css({overflow: 'visible'}).slideDown();
+  $('.timelineWrapper').css({overflow: 'visible', height: 'auto'}).slideDown();
   $('.readMore').hide();
   $('.readLess').show();
 });
 
 $('.readLess').on('click', function(){
-  $('.timelineWrapper').css({overflow: 'hidden'});
+  $('.timelineWrapper').css({overflow: 'hidden', height: '1000px'});
   $('.readLess').hide();
   $('.readMore').show();
 

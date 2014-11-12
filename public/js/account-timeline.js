@@ -3,15 +3,15 @@
 // =================================================
 
 var Timeline = function() {
-	this.locations = [];
+  this.locations = [];
 }
 
 var Location = function(place, map) {
-	this.place = place;
-	this.map = map;
-	// this.date = date;
-	// this.description = description;
-	console.log(place);
+  this.place = place;
+  this.map = map;
+  // this.date = date;
+  // this.description = description;
+  console.log(place);
 }
 
 Location.prototype.render = function() {
@@ -34,7 +34,7 @@ Location.prototype.render = function() {
 };
 
 var renderTimeline = function(placeMarker) {
-     placeMarker.submit = $("<div class='submitBtn'>Submit</div>");
+    placeMarker.submit = $("<div class='submitBtn'>Submit</div>");
     placeMarker.edit = $("<i class='fa fa-pencil fa-lg edit'></i>");
 
     var timelineDetails = $("<div class='timelineDetails'></div>");
@@ -55,16 +55,20 @@ var addLibrary = function(location){
   //location being sent from marker click function placemarker.name
 
   $.post('/api/saveToLibrary', {location: location}, function(results){
-    console.log(results);
+    console.log('results', results);
      $('#myLibrary').append('<a class="myLibraryList" href="/view/'+results.id +'"">' + results.location + "</a>");
   });
 
 };
 
+
 var submitClick = function() {
+  $('.submitBtn').show();
   var storeName = $(this).closest('.timelineDetails').find('.timelineDetailsName').text();
 
   var storeDescription = $(this).closest('.timelineDetails').find('.editable').val();
+
+  console.log($(this))
 
   var timelineData = {
     name: storeName,
@@ -72,16 +76,18 @@ var submitClick = function() {
   };
 
   console.log('timelineData: ',timelineData);
+  console.log('this closest', $(this).closest('.timelineDetails'))
 
-
-  $.post('/api/saveToTimeline', timelineData, function(err, results){
+  $.post('/api/saveToTimeline/', timelineData, function(err, results){
     console.log(results);
+  });
 
   //make textarea into div
   var originalText = $('.editable').closest('.timelineDetails');
   var newText = originalText.find('textarea').val();
   originalText.find('textarea').replaceWith('<div>' + newText + '</div>');
-  });
+
+
 };
 
 //When Marker is clicked Modal appears, asks to add to Timeline.
@@ -98,12 +104,11 @@ Location.prototype.markerclick = function(e) {
 
       //Object stores 'dot' marker information
       var placeMarker = {
-        img: $("<div class='placeMarkerImage'><img src='/images/dot.png'></div>"),
         name: location.marker.title,
         description: $("<textarea class='editable' placeholder='What is your experience?'></textarea>"),
+        edit: $("<i class='fa fa-pencil fa-lg edit'></i>"),
         submit: $("<div class='submitBtn'>Submit</div>")
       };
-
 
       renderTimeline(placeMarker);
 
@@ -117,7 +122,6 @@ Location.prototype.markerclick = function(e) {
     
   });
 };
-
 
 //hover edit button
 $('.edit').mouseover(function(){
@@ -136,19 +140,19 @@ $('.edit').on('click', function(){
 
 //show more of timeline
 $('.readMore').on('click', function(){
-  $('.timelineWrapper').css({overflow: 'visible'}).slideDown();
+  $('.timelineWrapper').css({overflow: 'visible', height: 'auto'}).slideDown();
   $('.readMore').hide();
   $('.readLess').show();
 });
 
 $('.readLess').on('click', function(){
-  $('.timelineWrapper').css({overflow: 'hidden'});
+  $('.timelineWrapper').css({overflow: 'hidden', height: '1000px'});
   $('.readLess').hide();
   $('.readMore').show();
 
 });
 
-
+//onload render timeline and library
 $(function(){
   $.get('/api/addToTimeline', {}, function(responseData){
       console.log('addToTimeline responseData:', responseData);
@@ -158,12 +162,9 @@ $(function(){
   });
 
   $.get('/api/getLibrary', {}, function(responseData){
-      console.log('addToTimeline responseData:', responseData);
       for(var i = 0; i < responseData.myLibrary.length; i++){
         renderLibrary(responseData.myLibrary[i]);
       };
   });
 
 });
-
-

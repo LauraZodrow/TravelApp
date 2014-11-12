@@ -24,6 +24,7 @@ var apiController = {
 
 	saveToTimeline: function(req, res){
 		var requireTimeline = req.body;
+		console.log('save to timeline', req.body);
 		var timelineArray = req.user.timeline.push(requireTimeline);
 
 		req.user.save();
