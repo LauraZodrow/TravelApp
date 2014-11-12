@@ -59,7 +59,7 @@ app.get('/api/getLibrary', apiController.getLibrary);
 app.post('/api/saveToCustomBoard', apiController.saveToCustomBoard);
 app.get('/api/getCustomBoard/:id', apiController.getCustomBoard);
 
-
-var server = app.listen(3741, function() {
+var port = process.env.PORT || 3741
+var server = app.listen(port, function() {
 	console.log('Express server listening on port ' + server.address().port);
 });
