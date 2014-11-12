@@ -2,6 +2,7 @@ body {
   font-family: "Freight Sans Light";
   font-style: normal;
   font-weight: normal;
+  color: #787878;
 }
 
 nav {
@@ -10,4 +11,8 @@ nav {
 
 .nav li {
 	color: #333333;
+}
+
+.navbar {
+	z-index: 10;
 }

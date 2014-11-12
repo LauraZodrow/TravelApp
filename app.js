@@ -44,7 +44,7 @@ app.use(passportConfig.ensureAuthenticated);
 //GET MY PAGES
 app.get('/', indexController.index);
 app.get('/board', indexController.board);
-app.get('/account/:id', indexController.account);
+app.get('/account/:id?', indexController.account);
 app.get('/view/:location', indexController.location);
 	
 // API Routes
@@ -56,6 +56,8 @@ app.post('/api/saveToCityTimeline/:location', apiController.saveToCityTimeline);
 app.get('/api/addToCityTimeline/:location', apiController.addToCityTimeline);
 app.post('/api/saveToLibrary', apiController.saveToLibrary);
 app.get('/api/getLibrary', apiController.getLibrary);
+app.post('/api/saveToCustomBoard', apiController.saveToCustomBoard);
+app.get('/api/getCustomBoard/:id', apiController.getCustomBoard);
 
 
 var server = app.listen(3741, function() {

@@ -66,6 +66,27 @@ var apiController = {
 		User.findOne({_id: req.user._id}, function(err, results){
 			res.send(results);
 		});
+	},
+
+	saveToCustomBoard: function(req, res){
+		var requestBoardId = req.body;
+		console.log('requestBoardId', requestBoardId);
+
+		var post = req.user.myLibrary.id(requestBoardId.cityId);
+		console.log('city post', post);
+
+		Board.findById(requestBoardId.boardId, function(err, doc){
+			post.customBoard.push(doc);
+			req.user.save(function(){
+				res.send(doc);
+			});
+		});
+	},
+
+	getCustomBoard: function(req, res){
+		//console.log(req.headers);
+		var post = req.user.myLibrary.id(req.params.id);
+		res.send(post);
 	}
 
 };

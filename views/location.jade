@@ -6,16 +6,24 @@ block stylesheets
 
 
 block content
+	script.
+		var currentlocation = '#{location}';
 	#map-canvas
 	input#pac-input.controls(type='text', placeholder='Search Box')
 	h2.city-name #{myLibrary.location}
-	//- .col-md-12.timelineLine
-	//- 	h2.timelineTitle
-	//- 	img(src="/images/timeline-line.png")
-	//- 	.placeMarkerImageWrapper
+	.timelineWrapper(data-id=location)
+	.readMore Read More
+	.readLess Read Less
+	h2.city-name #{myLibrary.location} Board
 	.row
-		.col-md-10.col-md-offset-2.timelineDetails(data-id=location)
-
+		.col-md-3.customBoardSchoolsWrapper
+			.customBoardSchools
+		.col-md-1
+		.col-md-3.customBoardMuseumsWrapper
+			.customBoardMuseums
+		.col-md-1
+		.col-md-3.customBoardPubsWrapper
+			.customBoardPubs
 
 	button.btn.btn-primary.btn-lg.modalButton(data-toggle='modal', data-target='#myModal')
 		|Add to Timeline

@@ -34,23 +34,17 @@ Location.prototype.render = function() {
 };
 
 var renderTimeline = function(placeMarker) {
-    $('.timelineDetails').empty();
+     placeMarker.submit = $("<div class='submitBtn'>Submit</div>");
+    placeMarker.edit = $("<i class='fa fa-pencil fa-lg edit'></i>");
 
-    placeMarker.img = $("<div class='placeMarkerImage'><img src='/images/dot.png'></div>");
-    placeMarker.submit = $("<div class='submitBtn'>Submit</div>");
-    
-    $('.placeMarkerImageWrapper').append(placeMarker.img);
-    $('.timelineDetails').append("<h3 class='timelineDetailsName'>" + placeMarker.name + "</h3>");
-    $('.timelineDetails').append(placeMarker.description);
-    $('.timelineDetails').append(placeMarker.submit);
-
-    placeMarker.img.click(function(){
-      $('.timelineDetails').empty();
-
-      $('.timelineDetails').append('<h3>' + placeMarker.name + '</h3>');
-      $('.timelineDetails').append(placeMarker.description);
-      $('.timelineDetails').append(placeMarker.submit);
-    });
+    var timelineDetails = $("<div class='timelineDetails'></div>");
+    timelineDetails.attr('data-id', placeMarker._id) ;
+  
+    timelineDetails.prepend(placeMarker.submit);
+    timelineDetails.prepend(placeMarker.edit);
+    timelineDetails.prepend(placeMarker.description);
+    timelineDetails.prepend("<h3 class='timelineDetailsName'>" + placeMarker.name + "</h3>");
+    $('.timelineWrapper').prepend(timelineDetails);
 };
 
 var renderLibrary = function(library){
@@ -82,6 +76,11 @@ var submitClick = function() {
 
   $.post('/api/saveToTimeline', timelineData, function(err, results){
     console.log(results);
+
+  //make textarea into div
+  var originalText = $('.editable').closest('.timelineDetails');
+  var newText = originalText.find('textarea').val();
+  originalText.find('textarea').replaceWith('<div>' + newText + '</div>');
   });
 };
 
@@ -106,26 +105,7 @@ Location.prototype.markerclick = function(e) {
       };
 
 
-
       renderTimeline(placeMarker);
-
-      // EDITABLE TEXTAREA
-      // placeMarker.description.on('click', function() {
-      //     var originalField = $(this)
-      //     var input = $('<textarea class="edit-input" />');
-      //     $(this).after(input);
-      //     input.height($(this).height());
-      //     $(this).hide();
-      //     input.val($(this).text());
-
-      //     input.focus();
-
-      //     input.on('blur', function() {
-      //       originalField.text(input.val());
-      //       input.remove();
-      //       originalField.show();
-      //     });
-      // });
 
       places.push(placeMarker);
 
@@ -137,6 +117,37 @@ Location.prototype.markerclick = function(e) {
     
   });
 };
+
+
+//hover edit button
+$('.edit').mouseover(function(){
+  console.log('edit works');
+  var editDescription = $("<p class='edit-description'>Edit</p>");
+  $(this).append(editDescription);
+});
+
+$('.edit').on('click', function(){
+  console.log('i work');
+  var originalText = $('.editable').closest('.timelineDetails');
+  var newText = originalText.find('<div>').val();
+  originalText.find('<div>').replaceWith('<textarea>' + newText + '</textarea>');
+
+})
+
+//show more of timeline
+$('.readMore').on('click', function(){
+  $('.timelineWrapper').css({overflow: 'visible'}).slideDown();
+  $('.readMore').hide();
+  $('.readLess').show();
+});
+
+$('.readLess').on('click', function(){
+  $('.timelineWrapper').css({overflow: 'hidden'});
+  $('.readLess').hide();
+  $('.readMore').show();
+
+});
+
 
 $(function(){
   $.get('/api/addToTimeline', {}, function(responseData){

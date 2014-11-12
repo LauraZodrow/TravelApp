@@ -6,32 +6,51 @@ function initialize() {
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     styles: [
     {
+        "featureType": "landscape.natural",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "visibility": "on"
+            },
+            {
+                "color": "#e0efef"
+            }
+        ]
+    },
+    {
+        "featureType": "poi",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "visibility": "on"
+            },
+            {
+                "hue": "#1900ff"
+            },
+            {
+                "color": "#c0e8e8"
+            }
+        ]
+    },
+    {
+        "featureType": "landscape.man_made",
+        "elementType": "geometry.fill"
+    },
+    {
         "featureType": "road",
-        "stylers": [
-            {
-                "visibility": "off"
-            }
-        ]
-    },
-    {
-        "featureType": "transit",
-        "stylers": [
-            {
-                "visibility": "off"
-            }
-        ]
-    },
-    {
-        "featureType": "administrative.province",
-        "stylers": [
-            {
-                "visibility": "off"
-            }
-        ]
-    },
-    {
-        "featureType": "poi.park",
         "elementType": "geometry",
+        "stylers": [
+            {
+                "lightness": 100
+            },
+            {
+                "visibility": "simplified"
+            }
+        ]
+    },
+    {
+        "featureType": "road",
+        "elementType": "labels",
         "stylers": [
             {
                 "visibility": "off"
@@ -42,36 +61,19 @@ function initialize() {
         "featureType": "water",
         "stylers": [
             {
-                "color": "#004b76"
+                "color": "#7dcdcd"
             }
         ]
     },
     {
-        "featureType": "landscape.natural",
+        "featureType": "transit.line",
+        "elementType": "geometry",
         "stylers": [
             {
                 "visibility": "on"
             },
             {
-                "color": "#fff6cb"
-            }
-        ]
-    },
-    {
-        "featureType": "administrative.country",
-        "elementType": "geometry.stroke",
-        "stylers": [
-            {
-                "visibility": "on"
-            },
-            {
-                "color": "#7f7d7a"
-            },
-            {
-                "lightness": 10
-            },
-            {
-                "weight": 1
+                "lightness": 700
             }
         ]
     }

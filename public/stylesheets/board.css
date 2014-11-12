@@ -1,15 +1,49 @@
 #boardForm {
 	display: none;
+	margin-top: 1%;
 }
 
-/*#board-list {
-	border-top:#000 solid 1px;
-	border-bottom:#000 solid 1px;
+.form-control {
+	width: 100%;
+	margin-bottom: 1%;
 }
-*/
+
+.locationInput,
+.detailsInput {
+	display: block;
+	width: 100%;
+	margin-bottom: 1%;
+	padding: 5px;
+	border-radius: 4px;
+}
+
+.cityInput,
+.countryInput {
+	width: 48%;
+	margin-bottom: 1%;
+	margin-right: 2%;
+	padding: 5px;
+	border-radius: 4px;
+}
+
+.submitInput {
+	display: block;
+	width: 100%;
+}
+
+.closeButton {
+
+}
+
+.board-nav {
+	margin-top: 2%;
+	border-top: #e7e7e7 1px solid;
+	border-bottom: #e7e7e7 1px solid;
+}
 
 .board-nav ul {
 	list-style: none;
+	margin-top: 10px;
 }
 
 .board-nav li {
@@ -18,13 +52,19 @@
 }
 
 .individual-board {
-	border-top: #000 solid 2px;
-	border-bottom: #000 solid 2px;
+	border-top: #C8C8C8 solid 2px;
+	border-bottom: #C8C8C8 solid 2px;
 	margin: 2% 0px;
+	box-shadow: 6px 6px 5px #E0E0E0;
+}
+
+.individual-board h3 {
+	color: #505050;
 }
 
 .individual-board h3 {
 	text-align: center;
+
 }
 
 .content {
@@ -42,6 +82,31 @@
 	margin-right: 10px;
 }
 
-#myBoardModal {
+.reviews-title {
+	text-align: center;
+	/*border-bottom: #e7e7e7 1px solid;*/
+	width: 90%;
+	margin: auto;
+	padding-bottom: 1%;
+	padding-top: 1%;
+	color: #404040;
+}
+
+.modalButton {
 	display: none;
+}
+
+.fa-plus {
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	font-size: 12px;
+}
+
+.addToBoardBtn:hover {
+	border-bottom: #7DCDCD solid 2px;
+}
+
+.button {
+	border: #7DCDCD solid 1px;
+	padding: 5px;
 }

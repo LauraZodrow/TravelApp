@@ -33,6 +33,7 @@ var userSchema = mongoose.Schema({
     }],
     customBoard: [{
       boardId: String,
+      cityId: String,
       role: String,
       location: String,
       details: String,

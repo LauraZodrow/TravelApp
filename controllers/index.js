@@ -8,9 +8,17 @@ var indexController = {
 	},
 
 	account: function(req, res) {
-		res.render('account', {
-			user: req.user
-		})
+		if (req.params.id){
+			User.findById(req.params.id, function(err, doc){
+				res.render('account', {
+					user: doc
+				})
+			}) 
+		} else {
+			res.render('account', {
+				user: req.user
+			})
+		}
 	},
 
 	location: function(req, res){

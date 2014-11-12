@@ -17,22 +17,24 @@ $( document ).ready(function() {
 		el. append("<div class='button'>Add to Board</div>");
 
 		//append the individual images with each specific role
-		el.append('<h3>' + trackData.role + '</h3>');
+		var roleWrapper = $('<div class="roleWrapper"></div>');
+		roleWrapper.append('<h3>' + trackData.role + '</h3>');
 		if (trackData.role === 'Museums'){
-			el.prepend("<i class='fa fa-university fa-2x'></i>")
+			roleWrapper.prepend("<i class='fa fa-university fa-2x'></i>")
 		} 
 		else if (trackData.role ==='Schools'){
-			el.prepend("<i class='fa fa-pencil fa-2x'></i>")
+			roleWrapper.prepend("<i class='fa fa-pencil fa-2x'></i>")
 		} 
 		else if (trackData.role === 'Food'){
-			el.prepend("<i class='fa fa-cutlery fa-2x'></i>")
+			roleWrapper.prepend("<i class='fa fa-cutlery fa-2x'></i>")
 		}
 		else if (trackData.role === 'Hostels'){
-			el.prepend("<i class='fa fa-home fa-2x'></i>")
+			roleWrapper.prepend("<i class='fa fa-home fa-2x'></i>")
 		}
 		else if (trackData.role === 'Pubs'){
-			el.prepend("<i class='fa fa-beer fa-2x'></i>")
+			roleWrapper.prepend("<i class='fa fa-beer fa-2x'></i>")
 		} 
+		el.append(roleWrapper);
 
 		var content = $('<div class="content"></div>');
 		content.append('<h4>' + trackData.location + '</h4>');
@@ -134,18 +136,28 @@ $( document ).ready(function() {
 
 $(document).on('click', '.button', function(){
 	$('#myBoardModal').modal('show');
+	$('#myBoardModal').attr('data-target', $(this).closest('.individual-board').attr('data-id'));
 });
 
-// $(document).on('click', '.addButton', function(){
-// 	console.log('this', this);
-// 	//get board information by id and add it to 'your board'
-// 	var storeCityId = $(this).closest('.board-list').find('.individual-board').attr('data-id');
-// 	console.log('storeCityId: ', storeCityId);
-// 	// $('#myBoardModal')
-// });
+$(document).on('click', '.addButton', function(){
+	var storeBoardTargetId = $('#myBoardModal').attr('data-target');
+	
+	var storeCityId = $('.form-cities').val();
 
+	var reviewsId = {
+		boardId: storeBoardTargetId,
+		cityId: storeCityId
+	};
 
+	$.post('/api/saveToCustomBoard', reviewsId, function(results){
+		console.log(results);
+		});
+	$('#myBoardModal').modal('hide');
 });
+
+
+
+});//close document on ready
 
 
 

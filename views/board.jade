@@ -5,38 +5,41 @@ block stylesheets
 	link(rel="stylesheet" type="text/css" href="stylesheets/board.css")
 
 block content
+	h1.reviews-title Reviews
 	.board-nav
 		ul.row
-			li.col-md-3.school-nav
-				i.fa.fa-pencil.fa-2x
+			li.col-md-2.school-nav
+				//- i.fa.fa-pencil.fa-lg
 				.school-text School
 			li.col-md-2.food-nav
-				i.fa.fa-cutlery.fa-2x
+				//- i.fa.fa-cutlery.fa-lg
 				.food-test Food
 			li.col-md-2.hostels-nav 
-				i.fa.fa-home.fa-2x
+				//- i.fa.fa-home.fa-lg
 				.hostels-text Hostels
 			li.col-md-2.museums-nav
-				i.fa.fa-university.fa-2x
+				//- i.fa.fa-university.fa-lg
 				.museums-text Museums
-			li.col-md-3.pubs-nav 
-				i.fa.fa-beer.fa-2x
+			li.col-md-2.pubs-nav 
+				//- i.fa.fa-beer.fa-lg
 				.pubs-text Pubs
-
-		h1 Activities Board
-	button.addToBoardBtn Create a Review
-	form#boardForm
-		input(type="text" name="location" placeholder="Location")
-		input(type="text" name="details" placeholder="Comments")
-		input(type="text" name="city" placeholder="City")
-		input(type="text" name="country" placeholder="Country")
-		input(type="submit")
-		select#boardSelect.form-control
-			option Schools
-			option Food
-			option Hostels
-			option Museums
-			option Pubs
+			li.col-md-2
+				i.fa.fa-plus.addToBoardBtn Create a Review
+	.row
+		form#boardForm.col-md-6.col-md-offset-3
+			select#boardSelect.form-control
+				option Schools
+				option Food
+				option Hostels
+				option Museums
+				option Pubs
+			.inputWrapper
+				input(type="text" name="location" placeholder="Place").locationInput
+				input(type="text" name="details" placeholder="Comments").detailsInput
+				input(type="text" name="city" placeholder="City").cityInput
+				input(type="text" name="country" placeholder="Country").countryInput
+				input(type="submit").submitInput
+				.closeButton Close
 
 	div#board-list
 
@@ -52,13 +55,14 @@ block content
 						span.sr-only Close
 				.modal-body
 					| Where do you want to pin this board?
-					select.form-control
+					select.form-control.form-cities
 						ul
 							for cities in myLibrary
-								option(data-id='#{cities._id}') #{cities.location}
+								option(value='#{cities._id}') #{cities.location}
 				.modal-footer
 					button.btn.btn-default(type='button', data-dismiss='modal') Close
 					button.btn.btn-primary.addButton(type='button') Add
 
 block scripts
 	script(src="/js/board.js")
+	script(src="/js/account-timeline.js")
