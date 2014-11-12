@@ -13,8 +13,8 @@ var indexController = require('./controllers/index.js');
 var authenticationController = require('./controllers/authentication');
 var apiController = require('./controllers/apiController.js');
 
-mongoose.connect('mongodb://localhost/travelApp');
-
+var mongoDB_URL = process.env.MONGOHQ_URL || 'mongod://localhost'
+mongoose.connect(mongoDB_URL + '/travelApp');
 //require Board Seed
 require('./models/seeds/boardSeed.js');
 
