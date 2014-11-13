@@ -1,23 +1,37 @@
 extends layout
 
+block stylesheets
+  link(rel="stylesheet" type="text/css" href="/stylesheets/login.css")
+
 block content
   //- Error comes through via the context passed when calling res.render('login', {...})
   //- You'll see this in controllers/authentication.js
   //- If the error exists, we'll display it.
   if error
     h3= error
+  .row.overlay
+    .col-md-1
+    .col-md-4
+      h2 Welcome,
+      p.welcome This app, Chronicles Abroad, helps organize and document the incredible experiences enjoyed while traveling. Also, users of the app can search through a reviews board, discussing the schools and programs, pubs, hostels, museums, and more in various countries for insights and details on the best activities.
+    .col-md-2
+    .col-md-5.col-md-offset-1
+      //- Form for handling existing user logins.
+      h3 Existing Users
+      form(action="/auth/login", method="post").existingUserInput
+        input(type="text", name="username", placeholder="Username").existingUserInputName
+        br
+        input(type="password", name="password", placeholder="Password").existingUserInputPassword
+        br
+        input(type="submit")
 
-  //- Form for handling existing user logins.
-  h1 Existing Users
-  form(action="/auth/login", method="post")
-    input(type="text", name="username", placeholder="Username")
-    input(type="password", name="password", placeholder="Password")
-    input(type="submit")
-
-  //- Form for allowing new users to register.
-  h1 Register
-  form(action="/auth/signup", method="post")
-    input(type="text", name="username", placeholder="Username")
-    input(type="email", name="email", placeholder="Email")
-    input(type="password", name="password", placeholder="Password")
-    input(type="submit")
+      //- Form for allowing new users to register.
+      h3 Register
+      form(action="/auth/signup", method="post").registerInput
+        input(type="text", name="username", placeholder="Username").registerInputName
+        br
+        input(type="email", name="email", placeholder="Email").registerInputEmail
+        br
+        input(type="password", name="password", placeholder="Password").registerInputPassword
+        br
+        input(type="submit")
