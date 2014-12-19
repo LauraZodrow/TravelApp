@@ -23,7 +23,7 @@ var performLogin = function(req, res, next, user){
 
     // Otherwise, send the user to the homepage.
     console.log("user:", user)
-    return res.redirect('/account/' + user._id);
+    return res.redirect('/profile/' + user._id);
   });
 };
 

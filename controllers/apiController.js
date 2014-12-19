@@ -14,27 +14,24 @@ var apiController = {
 		var trackData = req.body;
 
 		var newBoard = new Board(trackData);
-		console.log('newBoard:', newBoard);
 
 		newBoard.save(function(err, results){
-			console.log('music saved:', results);
 			res.send(results);
 		});
 	},
 
-	saveToTimeline: function(req, res){
-		var requireTimeline = req.body;
-		console.log('save to timeline', req.body);
-		var timelineArray = req.user.timeline.push(requireTimeline);
+	// saveToTimeline: function(req, res){
+	// 	var requireTimeline = req.body;
+	// 	var timelineArray = req.user.timeline.push(requireTimeline);
 
-		req.user.save();
-	},
+	// 	req.user.save();
+	// },
 
-	addToTimeline: function(req, res){
-		User.findOne({_id: req.user._id}, function(err, results){
-			res.send(results);
-		});
-	},
+	// addToTimeline: function(req, res){
+	// 	User.findOne({_id: req.user._id}, function(err, results){
+	// 		res.send(results);
+	// 	});
+	// },
 
 	saveToCityTimeline: function(req, res){
 		var requestTimeline = req.body;
@@ -58,7 +55,6 @@ var apiController = {
 		req.user.save( function( err, userDoc) {
 			var libraryId = userDoc.myLibrary[userDoc.myLibrary.length -1]._id;
 			var location = userDoc.myLibrary[userDoc.myLibrary.length-1].location;
-			console.log('libraryID', libraryId);
 			res.send({id: libraryId, location: location});
 		});
 	},
@@ -71,10 +67,8 @@ var apiController = {
 
 	saveToCustomBoard: function(req, res){
 		var requestBoardId = req.body;
-		console.log('requestBoardId', requestBoardId);
 
 		var post = req.user.myLibrary.id(requestBoardId.cityId);
-		console.log('city post', post);
 
 		Board.findById(requestBoardId.boardId, function(err, doc){
 			post.customBoard.push(doc);
@@ -85,9 +79,43 @@ var apiController = {
 	},
 
 	getCustomBoard: function(req, res){
-		//console.log(req.headers);
 		var post = req.user.myLibrary.id(req.params.id);
 		res.send(post);
+	},
+
+	updateCityTimeline: function(req, res){
+		var updateTimeline = req.body;
+	
+		var post = req.user.myLibrary.id(req.params.location).cityTimeline.id(updateTimeline.id);
+		console.log('updateCityTimeline post: ', post);
+
+		User.findById(req.user.id, function(err, results){
+			results.myLibrary.id(req.params.location).cityTimeline.id(post.id).name = updateTimeline.name;
+			results.myLibrary.id(req.params.location).cityTimeline.id(post.id).description = updateTimeline.description;
+			results.save(function(err, result){
+				res.send(result);
+			});
+		});
+	},
+
+	deleteTimelineEntry: function(req, res){
+		var deleteEntryId = req.body.id;
+		
+		// Find the user by id, then remove the timeline object with deleteEntryId
+		User.findOne(req.user.id, function(err, user) {
+			user.myLibrary.id(req.params.location).cityTimeline.id(deleteEntryId).remove(function(err, results) {
+
+					// Once the remove is done, save the user object
+					user.save(function(err, saveresults) {
+						res.send({
+							err: err, 
+							results: results,
+							success: err === null
+						});
+					});
+			});
+		});
+
 	}
 
 };

@@ -33,20 +33,25 @@ Location.prototype.render = function() {
    google.maps.event.addListener(this.marker, 'click', this.markerclick.bind(this));
 };
 
-var renderTimeline = function(placeMarker) {
-    placeMarker.submit = $("<div class='submitBtn'>Submit</div>");
-    placeMarker.edit = $("<i class='fa fa-pencil fa-lg edit'></i>");
-
+// RenderTimeLine: This function renders the place marker info into the timeline
+// @params: placeMarker: an object containing the data for the location, pageLoad: a true or false based on whether the placemarker is being rendered on initial page load (true) or on marker click (false)
+var renderTimeline = function(placeMarker, pageLoad) {
     var timelineDetails = $("<div class='timelineDetails'></div>");
     timelineDetails.attr('data-id', placeMarker._id) ;
-  
-    timelineDetails.prepend(placeMarker.submit);
-    timelineDetails.prepend(placeMarker.edit);
-    timelineDetails.prepend(placeMarker.description);
+    
+    if (pageLoad) {
+      timelineDetails.prepend("<div class='timelineDetailsDescription'>" + placeMarker.description + "</div>");
+    }
+    else {
+      timelineDetails.prepend("<textarea class='editable' placeholder='What is your experience?'>" + placeMarker.description + "</textarea>");
+    }
+
+    timelineDetails.prepend("<div class='timelineDetailsDate'>" + placeMarker.date + "</div>");
     timelineDetails.prepend("<h3 class='timelineDetailsName'>" + placeMarker.name + "</h3>");
     $('.timelineWrapper').prepend(timelineDetails);
 };
 
+//Show city collection with user id attached to link
 var renderLibrary = function(library){
     $('#myLibrary').append('<li><a class="myLibraryList" href="/view/'+ library._id +'">' + library.location + "</a></li>");
 };
@@ -55,12 +60,13 @@ var renderLibrary = function(library){
 var submitClick = function() {
   var storeName = $(this).closest('.timelineDetails').find('.timelineDetailsName').text();
 
-  var storeDescription = $(this).closest('.timelineDetails').find('.editable').val();
+  var storeDate = $(this).closest('.timelineDetails').find('.timelineDetailsDate').text();
 
-  console.log($(this))
+  var storeDescription = $(this).closest('.timelineDetails').find('.editable').val();
 
   var cityTimelineData = {
     name: storeName,
+    date: storeDate,
     description: storeDescription
   };
 
@@ -71,14 +77,20 @@ var submitClick = function() {
     console.log(results);
   });
 
-  //make textarea into div
+  // make textarea into div
   var originalText = $('.editable').closest('.timelineDetails');
   var newText = originalText.find('textarea').val();
-  originalText.find('textarea').replaceWith('<div>' + newText + '</div>');
+  originalText.find('textarea').replaceWith("<div class='timelineDetailsDescription'>" + newText + "</div>");
 
+  editButton = $("<i class='fa fa-pencil fa-lg edit'></i>");
+  $('.timelineDetails').prepend(editButton);
+
+  //remove submit button, after first submit
   $(this).remove();
 
 };
+
+
 
 //When Marker is clicked Modal appears, asks to add to Timeline.
 //If say yes, place name, textarea, and marker will be added to timeline
@@ -90,41 +102,25 @@ Location.prototype.markerclick = function(e) {
   $('.addButton').one('click', function () {
       $('#myModal').modal('hide');
 
-      var places = [];
+      var entryDate = moment().format("MMMM Do YYYY");
+      console.log('entryDate: ', entryDate);
 
-      //Object stores 'dot' marker information
       var placeMarker = {
         name: location.marker.title,
-        description: $("<textarea class='editable' placeholder='What is your experience?'></textarea>"),
-        edit: $("<i class='fa fa-pencil fa-lg edit'></i>"),
-        // submit: $("<div class='submitBtn'>Submit</div>")
+        date: entryDate,
+        description: ''
       };
 
-      renderTimeline(placeMarker);
+      submitButton = $("<div class='submitButton'>Submit</div>");
+      renderTimeline(placeMarker, false);
+      $('.timelineDetails:first-of-type').append(submitButton);
 
-      places.push(placeMarker);
-
-      placeMarker.submit.click(function(){
+      $(document).one('click', '.submitButton', function(){
         submitClick.call(this);
       });
     
   });
 };
-
-//hover edit button
-$('.edit').mouseover(function(){
-  console.log('edit works');
-  var editDescription = $("<p class='edit-description'>Edit</p>");
-  $(this).append(editDescription);
-});
-
-$('.edit').on('click', function(){
-  console.log('i work');
-  var originalText = $('.editable').closest('.timelineDetails');
-  var newText = originalText.find('<div>').val();
-  originalText.find('<div>').replaceWith('<textarea>' + newText + '</textarea>');
-
-})
 
 //show more of timeline
 $('.readMore').on('click', function(){
@@ -142,44 +138,92 @@ $('.readLess').on('click', function(){
 
 //onload render timeline and library
 $(function(){
-  $.get('/api/addToCityTimeline/' + $('.timelineWrapper').attr('data-id'), {}, function(responseData){
-      for(var i = 0; i < responseData.cityTimeline.length; i++){
-        renderTimeline(responseData.cityTimeline[i]);
-      };
-  });
-
+  //get cities library in nav bar (cities) 
   $.get('/api/getLibrary', {}, function(responseData){
       for(var i = 0; i < responseData.myLibrary.length; i++){
         renderLibrary(responseData.myLibrary[i]);
       };
   });
 
-  $.get('/api/getCustomBoard/' + currentlocation, {}, function(response){
-    console.log('getBoard:', response.customBoard);
-    for(var i = 0; i < response.customBoard.length; i++){
-      var boardRole = $("<h3 class='board-role'>" + response.customBoard[i].role + '</h3>');
-      var boardLocation = $('<h5>' + response.customBoard[i].location + '</h5>');
-      var boardDetails = $('<p>' + response.customBoard[i].details + '</p>');
-       var boardCity = $('<p>' + response.customBoard[i].city + ', ' + response.customBoard[i].country + '</p>');
-       if(response.customBoard[i].role === 'Pubs'){
-          $('.customBoardPubs').append(boardRole);
-          $('.customBoardPubs').append(boardLocation);
-          $('.customBoardPubs').append(boardDetails);
-          $('.customBoardPubs').append(boardCity);
-       } else if (response.customBoard[i].role === 'Museums') {
-          $('.customBoardMuseums').append(boardRole);
-          $('.customBoardMuseums').append(boardLocation);
-          $('.customBoardMuseums').append(boardDetails);
-          $('.customBoardMuseums').append(boardCity);
 
-       } else if (response.customBoard[i].role === 'Schools'){
-          $('.customBoardSchools').append(boardRole);
-          $('.customBoardSchools').append(boardLocation);
-          $('.customBoardSchools').append(boardDetails);
-          $('.customBoardSchools').append(boardCity);
-       }
-    };
-});  
+  var editButton = $("<i class='fa fa-pencil fa-lg edit'></i>");
+
+  $.get('/api/addToCityTimeline/' + $('.timelineWrapper').attr('data-id'), {}, function(responseData){
+      for(var i = 0; i < responseData.cityTimeline.length; i++){
+        renderTimeline(responseData.cityTimeline[i], true);
+      };
+      $('.timelineDetails').append(editButton);
+  });
+
+//On click edit the timeline entry
+  $(document).on('click', '.edit', function(){
+
+    var editId = $(this).closest('.timelineDetails').attr('data-id');
+
+    var originalText = $(this).closest('.timelineDetails');
+    var editText = originalText.find('.timelineDetailsDescription').text();
+    originalText.find('.timelineDetailsDescription').replaceWith("<textarea class='editable'>" + editText + "</textarea>")
+
+    var submitEditsButton = $("<div class='submitEditsButton'>Submit Edits</div>");
+    var deleteEntryButton = $("<div class='deleteEntryButton'>Delete This Entry</div>");
+    var addEditButtons = $(this).closest('.timelineDetails');
+    addEditButtons.append(submitEditsButton);
+    addEditButtons.append(deleteEntryButton);
+
+    submitEditsButton.on('click', function(){
+      // make textarea into div
+      var originalText = $(this).closest('.timelineDetails');
+      var newText = originalText.find('.editable').val();
+      originalText.find('.editable').replaceWith("<div class='timelineDetailsDescription'>" + newText + "</div>");
+
+
+      var updateName = $(this).closest('.timelineDetails').find('.timelineDetailsName').text();
+      var updateDescription = $(this).closest('.timelineDetails').find('.timelineDetailsDescription').text();
+
+      var cityTimelineUpdate = {
+        id: editId,
+        name: updateName,
+        description: updateDescription
+      };
+
+      console.log('cityTimelineUpdate: ', cityTimelineUpdate);
+
+      $.post('/api/updateCityTimeline/' + $(this).closest('.timelineWrapper').attr('data-id'), cityTimelineUpdate, function(err, results){
+        console.log(results);
+      });
+
+      $(this).closest('.timelineDetails').find('.deleteEntryButton').remove();
+      $(this).remove();
+
+    });
+
+    deleteEntryButton.on('click', function(){
+      var deleteId = $(this).closest('.timelineDetails').attr('data-id');
+  
+      var deleteEntry = $(this).closest('.timelineDetails');
+
+      $.post('/api/deleteTimelineEntry/' + $(this).closest('.timelineWrapper').attr('data-id'), {id: deleteId}, function(responseData){
+        if(responseData.success === true){
+          deleteEntry.remove();
+        }
+      });
+
+      $(this).remove();
+
+    });
+
+  });
+
+
+  $.get('/api/getCustomBoard/' + currentlocation, {}, function(response){
+      for(var i = 0; i < response.customBoard.length; i++){
+        var boardRole = $("<h3 class='board-role'>" + response.customBoard[i].role + '</h3>');
+        var boardLocation = $('<h5>' + response.customBoard[i].location + '</h5>');
+        var boardDetails = $('<p>' + response.customBoard[i].details + '</p>');
+        var boardCity = $('<p>' + response.customBoard[i].city + ', ' + response.customBoard[i].country + '</p>');
+        $('.customBoard' + response.customBoard[i].role).append(boardRole).append(boardLocation).append(boardDetails).append(boardCity);
+      };
+  }); //closes get custom board
 
 
 });

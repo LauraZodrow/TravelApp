@@ -1,4 +1,10 @@
 /*Google Map Css*/
+.mapClick,
+#pac-input,
+.controls {
+	display: none;
+}
+
 html, body {
 	height: 100%;
 }

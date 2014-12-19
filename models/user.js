@@ -40,11 +40,6 @@ var userSchema = mongoose.Schema({
       city: String,
       country: String
     }]
-  }],
-  timeline: [{
-    name: String,
-    date: String,
-    description: String
   }]
 });
 

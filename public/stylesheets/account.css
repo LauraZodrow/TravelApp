@@ -56,19 +56,21 @@ img {
 }
 
 .editable,
-.edit-input {
-	margin-bottom: 6%;
+.edit-input,
+.editTimelineDescription {
+	margin-bottom: 0%;
 	width: 100%;
 	min-height: 100px;
 }
 
-.submitBtn {
+.submitButton {
 	text-align: center;
 	border: #666 solid 2px;
 	width: 100%;
 	margin-bottom: 5%;
-	padding: 1%;
+	padding: 3px;
 	text-transform: uppercase;
+	font-size: 14px;
 }
 
 .board-nav ul {
@@ -89,22 +91,23 @@ img {
 
 .city-name,
 .timelineTitle {
-	margin-top: 4%;
+	margin-top: 3%;
 	padding-bottom: 1%;
 	margin-left: auto;
 	margin-right: auto;
 	text-align: center;
-	text-transform: uppercase;
+/*	text-transform: uppercase;*/
 	letter-spacing: 2px;
 	width: 50%;
 	border-bottom: #e7e7e7 1px solid;
 	color: #404040;
+	font-size: 2.7em;
 }
 
 .timelineDetails {
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 5%;
+	padding-bottom: 5%;
 	border-left: #e7e7e7 2px solid;
 	padding-left: 2%;
 	width: 70%;
@@ -116,14 +119,25 @@ img {
 .timelineDetails h3 {
 	font-size: 29px;
 	color: #505050;
+	margin-top: 0px;
 }
 
-.timelineDetailsName::before {
+.timelineDetailsName:before {
 	content: '•';
 	top: 0px;
 	left: 0px;
 	margin-left: -6px;
 	position: absolute;
+	padding-bottom: 10%;
+}
+
+.timelineDetailsName {
+	margin-bottom: 0px;
+	font-size: 2.2em;
+}
+
+.timelineDetailsDate {
+	font-size: .8em;
 }
 
 .timelineSidebar {
@@ -169,13 +183,24 @@ img {
 	color: #7DCDCD;
 }
 
-/*#customBoard {
-	margin-top: 2%;
-	border: #e7e7e7 solid 2px;
-	width: 25%;
+.submitEditsButton,
+.deleteEntryButton {
+	width: 20%;
+	margin: auto;
+	display: block;
 	text-align: center;
-	height: 250px;
-}*/
+	border: 1px solid #FDF087;
+	color: #FDF087;
+	border-radius: 7px;
+	font-weight: 100;
+	text-transform: lowercase;
+	font-size: .8em;
+}
+
+.deleteEntryButton {
+	border: 1px solid #C72A35;
+	color: #C72A35;
+}
 
 .board-role {
 	border-bottom: #7DCDCD solid 1px;

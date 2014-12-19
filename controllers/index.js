@@ -1,4 +1,9 @@
 var User = require('../models/user.js');
+var fs = require('fs');
+
+var KEY = 'AKIAINFMPWZMYXQP7PNA';
+var SECRET = '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';
+var BUCKET = 'mytravelapp';
 
 var indexController = {
 	index: function(req, res) {
@@ -7,15 +12,15 @@ var indexController = {
 		})
 	},
 
-	account: function(req, res) {
+	profile: function(req, res) {
 		if (req.params.id){
 			User.findById(req.params.id, function(err, doc){
-				res.render('account', {
+				res.render('profile', {
 					user: doc
 				})
 			}) 
 		} else {
-			res.render('account', {
+			res.render('profile', {
 				user: req.user
 			})
 		}
@@ -26,7 +31,8 @@ var indexController = {
 		res.render('location', {
 			user: req.user,
 			location: location,
-			myLibrary: req.user.myLibrary.id(location)
+			myLibrary: req.user.myLibrary.id(location),
+			// cityTimeline: req.user.myLibrary.id(location).cityTimeline
 		})
 
 	},

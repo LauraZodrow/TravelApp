@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var fs = require('fs');
 
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
@@ -44,20 +45,22 @@ app.use(passportConfig.ensureAuthenticated);
 //GET MY PAGES
 app.get('/', indexController.index);
 app.get('/board', indexController.board);
-app.get('/account/:id?', indexController.account);
+app.get('/profile/:id?', indexController.profile);
 app.get('/view/:location', indexController.location);
 	
 // API Routes
 app.get('/api/getBoard', apiController.getBoard);
 app.post('/api/addBoard', apiController.addBoard);
-app.post('/api/saveToTimeline', apiController.saveToTimeline);
-app.get('/api/addToTimeline', apiController.addToTimeline);
+// app.post('/api/saveToTimeline', apiController.saveToTimeline);
+// app.get('/api/addToTimeline', apiController.addToTimeline);
 app.post('/api/saveToCityTimeline/:location', apiController.saveToCityTimeline);
 app.get('/api/addToCityTimeline/:location', apiController.addToCityTimeline);
 app.post('/api/saveToLibrary', apiController.saveToLibrary);
 app.get('/api/getLibrary', apiController.getLibrary);
 app.post('/api/saveToCustomBoard', apiController.saveToCustomBoard);
 app.get('/api/getCustomBoard/:id', apiController.getCustomBoard);
+app.post('/api/updateCityTimeline/:location', apiController.updateCityTimeline);
+app.post('/api/deleteTimelineEntry/:location', apiController.deleteTimelineEntry);
 
 var port = process.env.PORT || 3741
 var server = app.listen(port, function() {

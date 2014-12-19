@@ -12,6 +12,7 @@ block content
 	input#pac-input.controls(type='text', placeholder='Search Box')
 	h2.city-name #{myLibrary.location}
 	.timelineWrapper(data-id=location)
+					
 	.readMore Read More
 	.readLess Read Less
 	h2.city-name #{myLibrary.location} Board
@@ -46,4 +47,5 @@ block content
 
 block scripts
 	script(src="/js/map.js")
+	script(src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js")
 	script(src="/js/location-timeline.js")
